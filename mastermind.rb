@@ -1,9 +1,13 @@
 # Game Loop
 class Mastermind
+  def initialize
+    @word_bank = %w[Red Blue Green Yellow Purple Orange Pink Brown Turquoise Lavender Indigo Cyan Maroon Olive Coral
+                    Silver Gray Teal Gold Magenta]
+    @turns = 12
+  end
+
   def generate_secret
-    word_bank = %w[Red Blue Green Yellow Purple Orange Pink Brown Turquoise Lavender Indigo Cyan Maroon Olive Coral Gold
-                   Silver Gray Teal Magenta]
-    @secret = word_bank.sample.to_s.downcase
+    @secret = @word_bank.sample.to_s.downcase
     puts @secret
   end
 
@@ -12,15 +16,24 @@ class Mastermind
   end
 
   def compare_choices
-    if @secret == @guess
-      puts 'The Guess is Correct!'
-    else
-      puts 'You Got It Wrong'
+    loop do
+      player_guess
+      if @secret == @guess
+        puts 'The Guess is Correct!'
+        break
+      end
+
+      @turns -= 1
+      puts "You Got It Wrong, turns left #{@turns}"
+
+      if @turns.zero?
+        puts 'game over'
+        break
+      end
     end
   end
 end
 
-m = Mastermind.new
-m.generate_secret
-m.player_guess
-m.compare_choices
+game = Mastermind.new
+game.generate_secret
+game.compare_choices
