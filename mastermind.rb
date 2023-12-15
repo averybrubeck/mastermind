@@ -26,7 +26,6 @@ class Mastermind
       @turns -= 1
       correct_count = correct_letter_count
       puts "You Got It Wrong, turns left #{@turns}, #{correct_count} of letters correct"
-      
 
       if @turns.zero?
         puts 'game over'
