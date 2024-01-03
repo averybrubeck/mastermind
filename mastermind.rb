@@ -8,14 +8,28 @@ class Mastermind
 
   def generate_secret
     @secret = @word_bank.sample.to_s.downcase
-    puts @secret
+  end
+
+  def player_generate_secret
+    puts 'Assign a color for the computer to predict.'
+    @secret = gets.chomp.to_s.downcase
   end
 
   def player_guess
     @guess = gets.chomp.to_s.downcase
   end
 
+  def correct_letter_count
+    correct_count = 0
+
+    @secret.chars.each_with_index do |char, index|
+      correct_count += 1 if char == @guess[index]
+    end
+    correct_count
+  end
+
   def player_game
+    generate_secret
     loop do
       player_guess
       if @secret == @guess
@@ -28,22 +42,19 @@ class Mastermind
       puts "You Got It Wrong, turns left #{@turns}, #{correct_count} of letters correct"
 
       if @turns.zero?
-        puts 'game over'
+        puts "game over the secret was #{@secret}"
         break
       end
     end
   end
 
-  def correct_letter_count
-    correct_count = 0
+  def computer_game
+    player_generate_secret
+    loop do
 
-    @secret.chars.each_with_index do |char, index|
-      correct_count += 1 if char == @guess[index]
     end
-    correct_count
   end
 end
 
 game = Mastermind.new
-game.generate_secret
 game.player_game
