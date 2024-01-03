@@ -51,10 +51,19 @@ class Mastermind
   def computer_game
     player_generate_secret
     loop do
-
+      @guess = @word_bank[0]
+      if @guess == @secret
+        puts 'The Computer Has Won'
+        break
+      end
+      if @turns.zero?
+        puts 'The Computer Has Run Out Of Turns'
+        break
+      end
+      @turns -= 1
     end
   end
 end
 
 game = Mastermind.new
-game.player_game
+game.computer_game
