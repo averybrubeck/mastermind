@@ -15,7 +15,7 @@ class Mastermind
     @guess = gets.chomp.to_s.downcase
   end
 
-  def compare_choices
+  def player_game
     loop do
       player_guess
       if @secret == @guess
@@ -46,4 +46,4 @@ end
 
 game = Mastermind.new
 game.generate_secret
-game.compare_choices
+game.player_game
