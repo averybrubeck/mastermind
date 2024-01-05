@@ -4,6 +4,7 @@ class Mastermind
     @word_bank = %w[Red Blue Green Yellow Purple Orange Pink Brown Turquoise Lavender Indigo Cyan Maroon Olive Coral
                     Silver Gray Teal Gold Magenta]
     @turns = 12
+    @current_word_index = 0
   end
 
   def generate_secret
@@ -26,6 +27,16 @@ class Mastermind
       correct_count += 1 if char == @guess[index]
     end
     correct_count
+  end
+
+  def generate_computer_guess
+    current_word = @word_bank[@current_word_index]
+    letter_to_guess = current_word[@turns]
+
+    if letter_to_guess.nil?
+      @current_word_index += 1
+      return generate_computer_guess if @current_word_index < @word_bank.length
+    end
   end
 
   def player_game
@@ -51,8 +62,7 @@ class Mastermind
   def computer_game
     player_generate_secret
     loop do
-      @guess = @word_bank[0]
-      if @guess == @secret
+      if @guess == generate_computer_guess
         puts 'The Computer Has Won'
         break
       end
